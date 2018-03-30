@@ -1,4 +1,4 @@
-# BabylonWp
+# ng-babylon
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) and is designed as a basic template for [BabylonJS](https://www.babylonjs.com/) combined with Angular and Bootstrap in Version 4.0
 
