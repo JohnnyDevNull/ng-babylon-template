@@ -1,0 +1,7 @@
+{
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": true,
+  "autoimport.doubleQuotes": false,
+  "files.encoding": "utf8"
+}
