@@ -86,12 +86,13 @@ export class EngineService {
       let dynamicTexture = new BABYLON.DynamicTexture('DynamicTexture', 50, $scope.scene, true);
       dynamicTexture.hasAlpha = true;
       dynamicTexture.drawText(text, 5, 40, 'bold 36px Arial', color , 'transparent', true);
-      // @todo fix <any> - actual a hack for @types Error...
-      let plane = <any>BABYLON.Mesh.CreatePlane('TextPlane', textSize, $scope.scene, true);
-      plane.material = new BABYLON.StandardMaterial('TextPlaneMaterial', $scope.scene);
-      plane.material.backFaceCulling = false;
-      plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
-      plane.material.diffuseTexture = dynamicTexture;
+      let plane = BABYLON.Mesh.CreatePlane('TextPlane', textSize, $scope.scene, true);
+      let material = new BABYLON.StandardMaterial('TextPlaneMaterial', $scope.scene);
+      material.backFaceCulling = false;
+      material.specularColor = new BABYLON.Color3(0, 0, 0);
+      material.diffuseTexture = dynamicTexture;
+      plane.material = material;
+
       return plane;
     };
 
