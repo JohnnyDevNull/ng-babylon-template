@@ -1,6 +1,10 @@
+import { Injectable } from '@angular/core';
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-materials';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class EngineService {
   private canvas: HTMLCanvasElement;
   private engine: BABYLON.Engine;
