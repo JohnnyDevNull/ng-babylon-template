@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable, NgZone } from '@angular/core';
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-materials';
 
@@ -14,9 +14,11 @@ export class EngineService {
 
   private sphere: BABYLON.Mesh;
 
-  createScene(elementId: string): void {
+  public constructor(private ngZone: NgZone) {}
+
+  createScene(canvas: ElementRef<HTMLCanvasElement>): void {
     // The first step is to get the reference of the canvas element from our HTML document
-    this.canvas = <HTMLCanvasElement>document.getElementById(elementId);
+    this.canvas = canvas.nativeElement;
 
     // Then, load the Babylon 3D engine:
     this.engine = new BABYLON.Engine(this.canvas,  true);
@@ -41,7 +43,7 @@ export class EngineService {
     this.sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 2, this.scene);
 
     // create the material with its texture for the sphere and assign it to the sphere
-    let spherMaterial = new BABYLON.StandardMaterial('sun_surface', this.scene);
+    const spherMaterial = new BABYLON.StandardMaterial('sun_surface', this.scene);
     spherMaterial.diffuseTexture = new BABYLON.Texture('assets/textures/sun.jpg', this.scene);
     this.sphere.material = spherMaterial;
 
@@ -49,7 +51,6 @@ export class EngineService {
     this.sphere.position.y = 1;
 
     // simple rotation along the y axis
-    let angle = 0.02;
     this.scene.registerAfterRender(() => {
       this.sphere.rotate (
         new BABYLON.Vector3(0, 1, 0),
@@ -63,16 +64,18 @@ export class EngineService {
   }
 
   animate(): void {
-    const $scope = this;
-
-    window.addEventListener('DOMContentLoaded', () => {
-      $scope.engine.runRenderLoop( () => {
-        $scope.scene.render();
+    // We have to run this outside angular zones,
+    // because it could trigger heavy changeDetection cycles.
+    this.ngZone.runOutsideAngular(() => {
+      window.addEventListener('DOMContentLoaded', () => {
+        this.engine.runRenderLoop(() => {
+          this.scene.render();
+        });
       });
-    });
 
-    window.addEventListener('resize', () => {
-      $scope.engine.resize();
+      window.addEventListener('resize', () => {
+        this.engine.resize();
+      });
     });
   }
 
@@ -84,14 +87,13 @@ export class EngineService {
    * @param size number
    */
   showWorldAxis (size: number) {
-    let $scope = this;
 
-    let makeTextPlane = function(text: string, color: string, textSize: number) {
-      let dynamicTexture = new BABYLON.DynamicTexture('DynamicTexture', 50, $scope.scene, true);
+    const makeTextPlane = (text: string, color: string, textSize: number) => {
+      const dynamicTexture = new BABYLON.DynamicTexture('DynamicTexture', 50, this.scene, true);
       dynamicTexture.hasAlpha = true;
       dynamicTexture.drawText(text, 5, 40, 'bold 36px Arial', color , 'transparent', true);
-      let plane = BABYLON.Mesh.CreatePlane('TextPlane', textSize, $scope.scene, true);
-      let material = new BABYLON.StandardMaterial('TextPlaneMaterial', $scope.scene);
+      const plane = BABYLON.Mesh.CreatePlane('TextPlane', textSize, this.scene, true);
+      const material = new BABYLON.StandardMaterial('TextPlaneMaterial', this.scene);
       material.backFaceCulling = false;
       material.specularColor = new BABYLON.Color3(0, 0, 0);
       material.diffuseTexture = dynamicTexture;
@@ -100,7 +102,7 @@ export class EngineService {
       return plane;
     };
 
-    let axisX = BABYLON.Mesh.CreateLines(
+    const axisX = BABYLON.Mesh.CreateLines(
       'axisX',
       [
         BABYLON.Vector3.Zero(),
@@ -111,10 +113,10 @@ export class EngineService {
     );
 
     axisX.color = new BABYLON.Color3(1, 0, 0);
-    let xChar = makeTextPlane('X', 'red', size / 10);
+    const xChar = makeTextPlane('X', 'red', size / 10);
     xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
 
-    let axisY = BABYLON.Mesh.CreateLines(
+    const axisY = BABYLON.Mesh.CreateLines(
       'axisY',
       [
         BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3( -0.05 * size, size * 0.95, 0),
@@ -124,10 +126,10 @@ export class EngineService {
     );
 
     axisY.color = new BABYLON.Color3(0, 1, 0);
-    let yChar = makeTextPlane('Y', 'green', size / 10);
+    const yChar = makeTextPlane('Y', 'green', size / 10);
     yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
 
-    let axisZ = BABYLON.Mesh.CreateLines(
+    const axisZ = BABYLON.Mesh.CreateLines(
       'axisZ',
       [
         BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3( 0 , -0.05 * size, size * 0.95),
@@ -137,7 +139,7 @@ export class EngineService {
     );
 
     axisZ.color = new BABYLON.Color3(0, 0, 1);
-    let zChar = makeTextPlane('Z', 'blue', size / 10);
+    const zChar = makeTextPlane('Z', 'blue', size / 10);
     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
   }
 }

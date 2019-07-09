@@ -1,22 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import 'babylonjs-materials';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { EngineService } from './engine.service';
 
 @Component({
   selector: 'app-engine',
-  templateUrl: './engine.component.html',
-  styleUrls: []
+  templateUrl: './engine.component.html'
 })
 export class EngineComponent implements OnInit {
-  private canEleId = 'renderCanvas';
 
-  constructor(
-    private engServ: EngineService
-  ) {
-  }
+  @ViewChild('rendererCanvas')
+  public rendererCanvas: ElementRef<HTMLCanvasElement>;
+
+  constructor(private engServ: EngineService) { }
 
   ngOnInit() {
-    this.engServ.createScene(this.canEleId);
+    this.engServ.createScene(this.rendererCanvas);
     this.engServ.animate();
   }
 }
