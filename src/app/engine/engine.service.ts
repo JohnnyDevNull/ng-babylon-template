@@ -67,11 +67,17 @@ export class EngineService {
     // We have to run this outside angular zones,
     // because it could trigger heavy changeDetection cycles.
     this.ngZone.runOutsideAngular(() => {
-      window.addEventListener('DOMContentLoaded', () => {
-        this.engine.runRenderLoop(() => {
-          this.scene.render();
+      const rendererLoopCallback = () => {
+        this.scene.render();
+      };
+
+      if (document.readyState !== 'loading') {
+        this.engine.runRenderLoop(rendererLoopCallback);
+      } else {
+        window.addEventListener('DOMContentLoaded', () => {
+          this.engine.runRenderLoop(rendererLoopCallback);
         });
-      });
+      }
 
       window.addEventListener('resize', () => {
         this.engine.resize();
