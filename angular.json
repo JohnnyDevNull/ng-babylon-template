@@ -18,6 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/dev",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -60,6 +61,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -142,5 +147,8 @@
       }
     }
   },
-  "defaultProject": "babylon-wp"
+  "defaultProject": "babylon-wp",
+  "cli": {
+    "analytics": "39c771ba-4917-4dc2-96ac-9bae9bff4073"
+  }
 }

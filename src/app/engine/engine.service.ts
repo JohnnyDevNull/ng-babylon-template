@@ -103,7 +103,7 @@ export class EngineService {
    *
    * @param size number
    */
-  public showWorldAxis (size: number) {
+  public showWorldAxis(size: number): void {
 
     const makeTextPlane = (text: string, color: string, textSize: number) => {
       const dynamicTexture = new DynamicTexture('DynamicTexture', 50, this.scene, true);
