@@ -1,3 +1,4 @@
+import { WindowRefService } from './../services/window-ref.service';
 import {ElementRef, Injectable, NgZone} from '@angular/core';
 import {
   Engine,
@@ -25,7 +26,10 @@ export class EngineService {
 
   private sphere: Mesh;
 
-  public constructor(private ngZone: NgZone) {}
+  public constructor(
+    private ngZone: NgZone,
+    private windowRef: WindowRefService
+  ) {}
 
   public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
     // The first step is to get the reference of the canvas element from our HTML document
@@ -82,15 +86,15 @@ export class EngineService {
         this.scene.render();
       };
 
-      if (document.readyState !== 'loading') {
+      if (this.windowRef.document.readyState !== 'loading') {
         this.engine.runRenderLoop(rendererLoopCallback);
       } else {
-        window.addEventListener('DOMContentLoaded', () => {
+        this.windowRef.window.addEventListener('DOMContentLoaded', () => {
           this.engine.runRenderLoop(rendererLoopCallback);
         });
       }
 
-      window.addEventListener('resize', () => {
+      this.windowRef.window.addEventListener('resize', () => {
         this.engine.resize();
       });
     });
