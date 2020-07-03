@@ -36,7 +36,10 @@
               "includePaths": [
                 "src/styles"
               ]
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "babylonjs-materials"
+            ]
           },
           "configurations": {
             "production": {

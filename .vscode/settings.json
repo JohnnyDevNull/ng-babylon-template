@@ -3,5 +3,6 @@
   "editor.tabSize": 2,
   "editor.detectIndentation": true,
   "autoimport.doubleQuotes": false,
-  "files.encoding": "utf8"
+  "files.encoding": "utf8",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
