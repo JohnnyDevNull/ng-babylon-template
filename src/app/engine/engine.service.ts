@@ -12,9 +12,9 @@ import {
   HemisphericLight,
   StandardMaterial,
   Texture,
-  DynamicTexture
-} from 'babylonjs';
-import 'babylonjs-materials';
+  DynamicTexture,
+  Space
+} from '@babylonjs/core';
 
 @Injectable({ providedIn: 'root' })
 export class EngineService {
@@ -70,7 +70,7 @@ export class EngineService {
       this.sphere.rotate (
         new Vector3(0, 1, 0),
         0.02,
-        BABYLON.Space.LOCAL
+        Space.LOCAL
       );
     });
 
@@ -116,7 +116,7 @@ export class EngineService {
       const plane = Mesh.CreatePlane('TextPlane', textSize, this.scene, true);
       const material = new StandardMaterial('TextPlaneMaterial', this.scene);
       material.backFaceCulling = false;
-      material.specularColor = new BABYLON.Color3(0, 0, 0);
+      material.specularColor = new Color3(0, 0, 0);
       material.diffuseTexture = dynamicTexture;
       plane.material = material;
 
@@ -133,7 +133,7 @@ export class EngineService {
       this.scene
     );
 
-    axisX.color = new BABYLON.Color3(1, 0, 0);
+    axisX.color = new Color3(1, 0, 0);
     const xChar = makeTextPlane('X', 'red', size / 10);
     xChar.position = new Vector3(0.9 * size, -0.05 * size, 0);
 
