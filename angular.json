@@ -3,17 +3,16 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "babylon-wp": {
-      "root": "",
-      "sourceRoot": "src",
+    "ng-babylon-template": {
       "projectType": "application",
-      "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "viewEncapsulation": "None"
+          "style": "scss"
         }
       },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -22,7 +21,8 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/assets",
               "src/favicon.ico"
@@ -30,7 +30,6 @@
             "styles": [
               "src/styles/main.scss"
             ],
-            "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/styles"
@@ -39,12 +38,7 @@
             "allowedCommonJsDependencies": [
               "babylonjs-materials"
             ],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -55,13 +49,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -70,27 +58,41 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kb"
+                  "maximumWarning": "10kb",
+                  "maximumError": "15kb"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "babylon-wp:build"
+            "browserTarget": "ng-babylon-template:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "babylon-wp:build:production"
+              "browserTarget": "ng-babylon-template:build:production"
+            },
+            "development": {
+              "browserTarget": "ng-babylon-template:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "babylon-wp:build"
+            "browserTarget": "ng-babylon-template:build"
           }
         },
         "test": {
@@ -98,7 +100,7 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "./src/karma.conf.js",
             "scripts": [],
             "styles": [
@@ -109,52 +111,9 @@
               "src/favicon.ico"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "babylon-wp-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "babylon-wp:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ng-dummy:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
   },
-  "defaultProject": "babylon-wp",
-  "cli": {
-    "analytics": "39c771ba-4917-4dc2-96ac-9bae9bff4073"
-  }
+  "defaultProject": "ng-babylon-template"
 }
