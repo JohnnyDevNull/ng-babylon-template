@@ -130,7 +130,8 @@ export class EngineService {
         new Vector3(size, 0, 0), new Vector3(size * 0.95, 0.05 * size, 0),
         new Vector3(size, 0, 0), new Vector3(size * 0.95, -0.05 * size, 0)
       ],
-      this.scene
+      this.scene,
+      true
     );
 
     axisX.color = new Color3(1, 0, 0);
@@ -143,7 +144,8 @@ export class EngineService {
         Vector3.Zero(), new Vector3(0, size, 0), new Vector3( -0.05 * size, size * 0.95, 0),
         new Vector3(0, size, 0), new Vector3( 0.05 * size, size * 0.95, 0)
       ],
-      this.scene
+      this.scene,
+      true
     );
 
     axisY.color = new Color3(0, 1, 0);
@@ -156,7 +158,8 @@ export class EngineService {
         Vector3.Zero(), new Vector3(0, 0, size), new Vector3( 0 , -0.05 * size, size * 0.95),
         new Vector3(0, 0, size), new Vector3( 0, 0.05 * size, size * 0.95)
       ],
-      this.scene
+      this.scene,
+      true
     );
 
     axisZ.color = new Color3(0, 0, 1);
