@@ -1,3 +1,3 @@
 export class DocumentMock extends Document {
-  public readyState: DocumentReadyState = 'loading';
+  public override readyState: DocumentReadyState = 'loading';
 }
