@@ -96,7 +96,7 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "",
           "options": {
             "polyfills": [
               "zone.js",
