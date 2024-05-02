@@ -3,6 +3,7 @@ import { EngineService } from './engine.service';
 
 @Component({
   selector: 'app-engine',
+  standalone: true,
   templateUrl: './engine.component.html'
 })
 export class EngineComponent implements OnInit {

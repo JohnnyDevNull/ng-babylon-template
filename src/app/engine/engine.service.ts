@@ -1,20 +1,20 @@
-import { WindowRefService } from './../services/window-ref.service';
-import {ElementRef, Injectable, NgZone} from '@angular/core';
+import { ElementRef, Injectable, NgZone } from '@angular/core';
 import {
-  Engine,
-  FreeCamera,
-  Scene,
-  Light,
-  Mesh,
   Color3,
   Color4,
-  Vector3,
+  DynamicTexture,
+  Engine,
+  FreeCamera,
   HemisphericLight,
+  Light,
+  Mesh,
+  Scene,
+  Space,
   StandardMaterial,
   Texture,
-  DynamicTexture,
-  Space
+  Vector3
 } from '@babylonjs/core';
+import { WindowRefService } from '../services/window-ref.service';
 
 @Injectable({ providedIn: 'root' })
 export class EngineService {
