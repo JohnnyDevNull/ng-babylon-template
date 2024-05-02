@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+
 import { WindowMock } from '../mock/window.mock';
 
 const getWindow = (): Window => window != null ? window : new WindowMock();
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WindowRefService {
   private readonly windowObject: Window;
 
