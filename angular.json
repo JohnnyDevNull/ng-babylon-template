@@ -77,14 +77,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-babylon-template:build"
+            "buildTarget": "ng-babylon-template:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-babylon-template:build:production"
+              "buildTarget": "ng-babylon-template:build:production"
             },
             "development": {
-              "browserTarget": "ng-babylon-template:build:development"
+              "buildTarget": "ng-babylon-template:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-babylon-template:build"
+            "buildTarget": "ng-babylon-template:build"
           }
         },
         "test": {
@@ -116,5 +116,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
