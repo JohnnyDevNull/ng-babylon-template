@@ -6,17 +6,16 @@ import { UiSidebarLeftComponent } from './ui-sidebar-left/ui-sidebar-left.compon
 import { UiSidebarRightComponent } from './ui-sidebar-right/ui-sidebar-right.component';
 
 @Component({
-  selector: 'app-ui',
-  standalone: true,
-  templateUrl: './ui.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    UiInfobarBottomComponent,
-    UiInfobarTopComponent,
-    UiSidebarLeftComponent,
-    UiSidebarRightComponent
-  ]
+    selector: 'app-ui',
+    templateUrl: './ui.component.html',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        UiInfobarBottomComponent,
+        UiInfobarTopComponent,
+        UiSidebarLeftComponent,
+        UiSidebarRightComponent
+    ]
 })
 export class UiComponent implements OnInit {
 

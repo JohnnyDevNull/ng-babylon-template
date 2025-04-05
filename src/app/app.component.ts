@@ -4,14 +4,13 @@ import { EngineComponent } from './engine/engine.component';
 import { UiComponent } from './ui/ui.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  templateUrl: './app.component.html',
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    EngineComponent,
-    UiComponent,
-  ],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        EngineComponent,
+        UiComponent,
+    ]
 })
 export class AppComponent {}
