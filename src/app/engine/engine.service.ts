@@ -1,19 +1,17 @@
 import { ElementRef, Injectable, NgZone } from '@angular/core';
-import {
-  Color3,
-  Color4,
-  DynamicTexture,
-  Engine,
-  FreeCamera,
-  HemisphericLight,
-  Light,
-  Mesh,
-  Scene,
-  Space,
-  StandardMaterial,
-  Texture,
-  Vector3
-} from '@babylonjs/core';
+import { FreeCamera } from '@babylonjs/core/Cameras/freeCamera';
+import { Engine } from '@babylonjs/core/Engines/engine';
+import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight';
+import { Light } from '@babylonjs/core/Lights/light';
+import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
+import { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture';
+import { Texture } from '@babylonjs/core/Materials/Textures/texture';
+import { Space } from '@babylonjs/core/Maths/math.axis';
+import { Color3, Color4 } from '@babylonjs/core/Maths/math.color';
+import { Vector3 } from '@babylonjs/core/Maths/math.vector';
+import { Mesh } from '@babylonjs/core/Meshes/mesh';
+import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
+import { Scene } from '@babylonjs/core/scene';
 import { WindowRefService } from '../services/window-ref.service';
 
 @Injectable({ providedIn: 'root' })
@@ -36,7 +34,7 @@ export class EngineService {
     this.canvas = canvas.nativeElement;
 
     // Then, load the Babylon 3D engine:
-    this.engine = new Engine(this.canvas,  true);
+    this.engine = new Engine(this.canvas, true);
 
     // create a basic BJS Scene object
     this.scene = new Scene(this.engine);
@@ -54,8 +52,15 @@ export class EngineService {
     // create a basic light, aiming 0,1,0 - meaning, to the sky
     this.light = new HemisphericLight('light1', new Vector3(0, 1, 0), this.scene);
 
-    // create a built-in "sphere" shape; its constructor takes 4 params: name, subdivisions, radius, scene
-    this.sphere = Mesh.CreateSphere('sphere1', 16, 2, this.scene);
+    // create a built-in "sphere" shape; its constructor takes 3 params: name, options, scene
+    this.sphere = MeshBuilder.CreateSphere(
+      'sphere1',
+      {
+        segments: 16,
+        diameter: 2,
+      },
+      this.scene
+    );
 
     // create the material with its texture for the sphere and assign it to the sphere
     const spherMaterial = new StandardMaterial('sun_surface', this.scene);
@@ -123,43 +128,57 @@ export class EngineService {
       return plane;
     };
 
-    const axisX = Mesh.CreateLines(
+    const axisX = MeshBuilder.CreateLines(
       'axisX',
-      [
-        Vector3.Zero(),
-        new Vector3(size, 0, 0), new Vector3(size * 0.95, 0.05 * size, 0),
-        new Vector3(size, 0, 0), new Vector3(size * 0.95, -0.05 * size, 0)
-      ],
-      this.scene,
-      true
+      {
+        points: [
+          Vector3.Zero(),
+          new Vector3(size, 0, 0),
+          new Vector3(size * 0.95, 0.05 * size, 0),
+          new Vector3(size, 0, 0),
+          new Vector3(size * 0.95, -0.05 * size, 0),
+        ],
+        updatable: true,
+      },
+      this.scene
     );
 
     axisX.color = new Color3(1, 0, 0);
     const xChar = makeTextPlane('X', 'red', size / 10);
     xChar.position = new Vector3(0.9 * size, -0.05 * size, 0);
 
-    const axisY = Mesh.CreateLines(
+    const axisY = MeshBuilder.CreateLines(
       'axisY',
-      [
-        Vector3.Zero(), new Vector3(0, size, 0), new Vector3( -0.05 * size, size * 0.95, 0),
-        new Vector3(0, size, 0), new Vector3( 0.05 * size, size * 0.95, 0)
-      ],
-      this.scene,
-      true
+      {
+        points: [
+          Vector3.Zero(),
+          new Vector3(0, size, 0),
+          new Vector3(-0.05 * size, size * 0.95, 0),
+          new Vector3(0, size, 0),
+          new Vector3(0.05 * size, size * 0.95, 0),
+        ],
+        updatable: true,
+      },
+      this.scene
     );
 
     axisY.color = new Color3(0, 1, 0);
     const yChar = makeTextPlane('Y', 'green', size / 10);
     yChar.position = new Vector3(0, 0.9 * size, -0.05 * size);
 
-    const axisZ = Mesh.CreateLines(
+    const axisZ = MeshBuilder.CreateLines(
       'axisZ',
-      [
-        Vector3.Zero(), new Vector3(0, 0, size), new Vector3( 0 , -0.05 * size, size * 0.95),
-        new Vector3(0, 0, size), new Vector3( 0, 0.05 * size, size * 0.95)
-      ],
-      this.scene,
-      true
+      {
+        points: [
+          Vector3.Zero(),
+          new Vector3(0, 0, size),
+          new Vector3(0, -0.05 * size, size * 0.95),
+          new Vector3(0, 0, size),
+          new Vector3(0, 0.05 * size, size * 0.95),
+        ],
+        updatable: true,
+      },
+      this.scene
     );
 
     axisZ.color = new Color3(0, 0, 1);
