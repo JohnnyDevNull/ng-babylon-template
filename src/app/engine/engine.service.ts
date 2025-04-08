@@ -1,19 +1,16 @@
 import { ElementRef, Injectable, NgZone } from '@angular/core';
-import {
-  Color3,
-  Color4,
-  DynamicTexture,
-  Engine,
-  FreeCamera,
-  HemisphericLight,
-  Light,
-  Mesh,
-  Scene,
-  Space,
-  StandardMaterial,
-  Texture,
-  Vector3
-} from '@babylonjs/core';
+import { FreeCamera } from '@babylonjs/core/Cameras/freeCamera';
+import { Engine } from '@babylonjs/core/Engines/engine';
+import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight';
+import { Light } from '@babylonjs/core/Lights/light';
+import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
+import { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture';
+import { Texture } from '@babylonjs/core/Materials/Textures/texture';
+import { Space } from '@babylonjs/core/Maths/math.axis';
+import { Color3, Color4 } from '@babylonjs/core/Maths/math.color';
+import { Vector3 } from '@babylonjs/core/Maths/math.vector';
+import { Mesh } from '@babylonjs/core/Meshes/mesh';
+import { Scene } from '@babylonjs/core/scene';
 import { WindowRefService } from '../services/window-ref.service';
 
 @Injectable({ providedIn: 'root' })
